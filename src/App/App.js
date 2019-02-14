@@ -9,6 +9,7 @@ import AddFolder from '../AddFolder/AddFolder'
 import AddNote from '../AddNote/AddNote'
 import RouteContext from '../RouteContext';
 import NotePageContext from '../NotePageContext';
+import ErrorBoundary from '../errorBoundary/errorBoundary'
 
 import './App.css'
 
@@ -273,6 +274,7 @@ class App extends Component {
 
   render() {
     return (
+      <ErrorBoundary>
       <div className='App'>
         <nav className='App__nav'>
           {this.renderNavRoutes()}
@@ -288,6 +290,7 @@ class App extends Component {
           {this.renderMainRoutes()}
         </main>
       </div>
+      </ErrorBoundary>
     )
   }
 }

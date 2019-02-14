@@ -48,15 +48,8 @@ export default class AddFolder extends Component {
 
   }
 
-  // handleNameOnChange(e){
-  //   this.setState({
-  //     folderName: e.target.value
-  //   })
-  // }
-
 
   render() {
-    console.log(this.props)
     return (
       <section className='AddFolder'>
         <h2>Create a folder</h2>
