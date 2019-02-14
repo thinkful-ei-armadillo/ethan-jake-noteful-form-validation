@@ -53,7 +53,7 @@ class App extends Component {
     fetch(url, {
       headers: {
       "Content-Type": "application/json"},
-      method: 'POST', 
+      method: 'POST',
       body: JSON.stringify({name: newFolder.folderName})
     })
     .then(res => {
@@ -72,6 +72,36 @@ class App extends Component {
       console.log(err.message)
     });
   };
+
+  createNewNote = (newNote) => {
+
+    newNote.modified = new Date().toISOString();
+
+    fetch('http://localhost:9090/notes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newNote)
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Failed to create new Note');
+        }
+
+        return res.json();
+      })
+      .then((json) => {
+        console.log(json);
+        this.setState({
+          notes: [ json, ...this.state.notes ]
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        throw err;
+      });
+  }
 
   componentDidMount() {
 
@@ -231,7 +261,7 @@ class App extends Component {
             )
           }}
         /> */}
-        <RouteContext.Provider key="addNote" value={{folders}} >
+        <RouteContext.Provider key="addNote" value={{folders, createNewNote: this.createNewNote}} >
         <Route
           path='/add-note'
           component={AddNote}

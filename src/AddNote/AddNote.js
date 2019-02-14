@@ -78,7 +78,7 @@ export default class AddNote extends Component {
     let isValid      = true;
     let errorMessage = null;
 
-    if (!e.target.value) {
+    if (e.target.value === '...') {
       isValid = false;
       errorMessage = 'Please choose a folder'
     }
@@ -96,27 +96,18 @@ export default class AddNote extends Component {
     e.preventDefault();
 
     if (this.state.nameValid && this.state.contentValid && this.state.folderIdValid) {
+
       this.setState({ formValid: true });
-      this.context.addNewNote({
+      this.context.createNewNote({
         name     : this.state.name,
         content  : this.state.content,
         folderId : this.state.folderId
       });
       this.props.history.goBack();
     } else {
+
       this.setState({ formValid: false });
     }
-
-    // if everything valid
-      // set formValid to true
-      // call callback from context
-      // redirect
-    // else
-      // do nothing
-
-
-
-    console.log('form submit');
   }
 
   render() {
