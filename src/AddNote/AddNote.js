@@ -86,6 +86,7 @@ export default class AddNote extends Component {
     this.setState({
       folderId: e.target.value,
       folderIdValid: isValid,
+
       errorMessages: {
         folderId: errorMessage,
       }
@@ -121,12 +122,14 @@ export default class AddNote extends Component {
               Name
             </label>
             <input type='text' id='note-name-input' onChange={(e) => { this.updateName(e) }}/>
+            <p class="form-error">{this.state && this.state.errorMessages.name}</p>
           </div>
           <div className='field'>
             <label htmlFor='note-content-input'>
               Content
             </label>
             <textarea id='note-content-input'  onChange={(e) => { this.updateContent(e) }}/>
+            <p class="form-error">{this.state && this.state.errorMessages.content}</p>
           </div>
           <div className='field'>
             <label htmlFor='note-folder-select'>
@@ -140,6 +143,7 @@ export default class AddNote extends Component {
                 </option>
               )}
             </select>
+            <p class="form-error">{this.state && this.state.errorMessages.folderId}</p>
           </div>
           <div className='buttons'>
             <button type='submit'>
