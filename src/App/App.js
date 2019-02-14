@@ -47,6 +47,32 @@ class App extends Component {
       });
   }
 
+  createNewFolder = (newFolder) => {
+    console.log(newFolder)
+    const url = 'http://localhost:9090/folders'
+    fetch(url, {
+      headers: {
+      "Content-Type": "application/json"},
+      method: 'POST', 
+      body: JSON.stringify({name: newFolder.folderName})
+    })
+    .then(res => {
+      if(!res.ok) {
+        console.log('Response not OK');
+        throw new Error("Failed to create new folder")
+      }
+      return res.json();
+    })
+    .then((data) => {
+      this.setState({
+        folders: [data, ...this.state.folders]
+      })
+    })
+    .catch(err => {
+      console.log(err.message)
+    });
+  };
+
   componentDidMount() {
 
     const data = {};
@@ -187,11 +213,13 @@ class App extends Component {
           path='/note/:noteId'
           component={NotePageMain}
               />
-        </NotePageContext.Provider>
+        </NotePageContext.Provider >
+        <RouteContext.Provider value={{createNewFolder: this.createNewFolder}}>
         <Route
           path='/add-folder'
           component={AddFolder}
         />
+        </RouteContext.Provider>
         {/* <Route
           path='/add-note'
           render={routeProps => {
