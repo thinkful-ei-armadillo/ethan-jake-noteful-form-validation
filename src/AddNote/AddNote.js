@@ -13,6 +13,7 @@ export default class AddNote extends Component {
 
   static state = {
     formValid: false,
+
     nameValid: false,
     contentValid: false,
     folderIdValid: false,
@@ -93,6 +94,28 @@ export default class AddNote extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+
+    if (this.state.nameValid && this.state.contentValid && this.state.folderIdValid) {
+      this.setState({ formValid: true });
+      this.context.addNewNote({
+        name     : this.state.name,
+        content  : this.state.content,
+        folderId : this.state.folderId
+      });
+      this.props.history.goBack();
+    } else {
+      this.setState({ formValid: false });
+    }
+
+    // if everything valid
+      // set formValid to true
+      // call callback from context
+      // redirect
+    // else
+      // do nothing
+
+
+
     console.log('form submit');
   }
 
